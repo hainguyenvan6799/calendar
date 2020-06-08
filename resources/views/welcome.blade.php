@@ -15,9 +15,21 @@
 			<div class='col-md-4'></div>
 			<div class='col-md-4'>
 				<script src='https://js.stripe.com/v2/' type='text/javascript'></script>
-				<form accept-charset="UTF-8" action="/" class="require-validation"
+
+				<div class="alert alert-danger">
+					@if(session('thongbao'))
+						{{session('thongbao')}}
+					@endif
+				</div>
+
+				<div class="alert alert-success">
+					@if(session('thongbao2'))
+						{{session('thongbao2')}}
+					@endif
+				</div>
+				<form accept-charset="UTF-8" action="test" class="require-validation"
 					data-cc-on-file="false"
-					data-stripe-publishable-key="pk_test_yourPublishableKey"
+					data-stripe-publishable-key="pk_test_lg65pJjeTnXY3J3m9v3vAerr00fxkhXMoc"
 					id="payment-form" method="post">
 					{{ csrf_field() }}
 					<div class='form-row'>

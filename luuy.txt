@@ -1,0 +1,30 @@
+Để làm được OTP login: https://www.youtube.com/watch?v=6C47Fu63oXI
+cần cài đặt gói: composer require nexmo/laravel
+
+sau đó chỉnh sửa code trong config/app.php
+
+'providers' => [
+	//Orther providers
+
+	Nexmo\Laravel\NexmoServiceProvider::class,
+]
+
+'aliases' => [
+	//Orther aliases
+
+	'Nexmo' => Nemo\Laravel\Facade\Nexmo::class,
+]
+
+để sử dụng nexmo thì:
+use Nexmo\Laravel\Facade\Nexmo;
+
+sau đó chạy lệnh php artisan vendor:publish
+
+sau đó vào trang https://dashboard.nexmo.com/your-numbers(sau đó bấm vào testnumber cuối trang)->loằn ngoằn sau đó lại vào trang getting-started để lấy key điền vào trang .env như sau
+
+NEXMO_KEY=7b3b2e75
+NEXMO_SECRET=JQ1mvfEmPZaGiN8X
+
+sau đó chạy lệnh php artisan make:auth
+
+tạo một model Sendcode

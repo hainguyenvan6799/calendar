@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
+use App\Sendcode;
+use Illuminate\Http\Request;
 class RegisterController extends Controller
 {
     /*
@@ -27,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/verify';
 
     /**
      * Create a new controller instance.
@@ -53,7 +56,7 @@ class RegisterController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
     }
-
+    
     /**
      * Create a new user instance after a valid registration.
      *
@@ -62,10 +65,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'active' => 0,
             'password' => bcrypt($data['password']),
         ]);
+        if($user)
+        {
+            $user->code = Sendcode::sendCode($user->phone);
+            $user->save();
+        }
+    }
+
+    //cais nay thuc hien sau cung
+
+    public function register(Request $request){
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        return redirect('/verify?phone='.$request->phone);
     }
 }
