@@ -28,3 +28,7 @@ NEXMO_SECRET=JQ1mvfEmPZaGiN8X
 sau đó chạy lệnh php artisan make:auth
 
 tạo một model Sendcode
+
+
+//google map package
+https://github.com/farhanwazir/laravelgooglemaps
